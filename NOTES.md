@@ -1,5 +1,35 @@
 # Daily Notes
 
+## ▶ Sprint B — ReviewDesk endpoint hardening (2026-08-16, afternoon session)
+
+**DONE**, verified, committed + pushed (`MejorQueNada/code-review-desk` `97d2641`).
+Prod still not redeployed (owner: repos up to date, nothing running).
+
+- **Pre-clone size gate** (`review_scan.ts`): GitHub API repo-size check (TTL
+  cached 1h, `checkRepoSizeViaApi`) runs before `git clone` — oversize repos
+  are skipped without consuming clone bandwidth. Falls back to the post-clone
+  check if the API fails. Verified: `rust-lang/rust` (947 MB) paid → skipped
+  pre-clone.
+- **Rate limiter** (`rate_limit.ts`, new): per-IP sliding window on `/mcp`
+  (default 30 req/min, `RATE_LIMIT_PER_MIN`, no new dependency), 429 +
+  `Retry-After`, opportunistic pruning past 10k entries. Verified 429 on
+  budget exhaustion.
+- **SSE session hardening** (`sse.ts`): client-supplied `sessionId` no longer
+  honored (was a session-hijack vector — attacker could overwrite another
+  client's transport); sessions capped at 200 and expire after 30 min.
+  Verified: `?sessionId=hijack-attempt` → 400.
+- **/tmp leak fixed** (`review_scan.ts`): findings.json + clone now live in one
+  temp dir removed in `finally`. Before: each scan left 76KB (`findings.json`)
+  behind — confirmed by 3 leftovers from Sprint A runs (cleaned).
+- **MemoryStorage TTL** (`storage.ts`, new): `TtlMemoryStorage` wraps
+  `MemoryStorage`; paid-but-unexecuted hashes expire after 1h instead of
+  accumulating. Known limitation (unchanged): restart/scale still loses in-flight
+  hashes → re-invoice; that needs a persistent store (out of scope, noted).
+- **Regression:** full paid E2E re-run (invoice → pay → 99 findings on
+  `gitleaks/gitleaks`) — REDACTION_OK, no /tmp residue.
+- **Ledger:** 2 new net-zero self-payment entries (hub txn 49, 51). Balance
+  unchanged (96,954 sats).
+
 ## ▶ Sprint A — ReviewDesk redaction fix (2026-08-16, afternoon session)
 
 Closed as part of the hardening sweep the owner commissioned (Sprint A: redaction,
