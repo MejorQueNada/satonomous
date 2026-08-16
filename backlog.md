@@ -94,15 +94,25 @@ C rides on B's rails, D any time, E/F optional.
   all replies rendered "(empty response)"), native plan/build via `agent`
   field, drop-vs-idle distinction, skills retry on reconnect, `tsconfig` +
   `npm run typecheck` (16 latent type errors fixed), E2E smoke test
-  (`scripts/e2e-test.mjs`, PASS vs live 1.18.18). Uncommitted on
-  `improvements` branch.
-- **Backlog sprints (all planned, none started):** S2 any-provider + free-model
-  picker (auto-detect binary, model switcher, per-message model, optional
-  server password); S3 vault UX (markdown rendering, `@`-mentions/FilePart,
-  selection context, stop/abort, session persistence + multi-tab); S4 agent UX
-  + release (permission approval UI, session history/fork, slash-command
-  passthrough, LICENSE/versions.json/release workflow); S5 parity polish
-  (inline edit w/ word-level diff, tool-progress, reasoning toggle).
+  (`scripts/e2e-test.mjs`, PASS vs live 1.18.18). Committed `54578f8` +
+  pushed (`improvements`).
+- **Sprint 2 (✅ DONE 2026-08-16 — any-provider + free models):** settings are
+  provider-agnostic (opencode's own auth by default, optional `KEY=VALUE` env
+  injection, legacy OpenRouter key auto-migrates), auto-start no longer gated
+  on an API key, opencode binary auto-detect (PATH → common locations), model
+  picker in chat footer from `GET /provider` (`{ all: [...] }`) with free =
+  zero-cost + authenticated default and a "free" quick button, per-message
+  `model` override on `prompt_async`, optional `OPENCODE_SERVER_PASSWORD`
+  basic auth on spawn + all requests/SSE. E2E test extended (auth, provider,
+  free-model override) — PASS both auth paths vs 1.18.18. **Note:** opencode
+  1.18 removed `GET /skill` — skills slash-menu can't populate; file-based
+  skill discovery deferred.
+- **Backlog sprints (all planned, none started):** S3 vault UX (markdown
+  rendering, `@`-mentions/FilePart, selection context, stop/abort, session
+  persistence + multi-tab); S4 agent UX + release (permission approval UI,
+  session history/fork, slash-command passthrough, LICENSE/versions.json/
+  release workflow); S5 parity polish (inline edit w/ word-level diff,
+  tool-progress, reasoning toggle, file-based skills).
 - Launch/milestone rule: nothing ships (releases/plugin-store submission)
   without a conscious owner decision + `NOTES.md` entry. This is a free/open
   tool, not a revenue bet — value is dogfooding opencode as a free-model hub.

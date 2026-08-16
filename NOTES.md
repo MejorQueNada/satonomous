@@ -1,5 +1,39 @@
 # Daily Notes
 
+## ▶ OpenVault Sprint 2 — any-provider + free-model picker: DONE (2026-08-16)
+
+On `ventures/openvault` branch `improvements`. Verified via live `opencode
+serve` (1.18.18): **both auth paths pass** (plain + basic-auth), provider
+fetch + free-model default + per-message model override + streaming all
+PASS (e2e on `google/gemma-4-26b-a4b-it`, a cost-0 model).
+
+- **Provider-agnostic auth:** settings no longer have an OpenRouter key.
+  opencode's own auth (`opencode auth login`) is the default; power users can
+  inject `KEY=VALUE` env lines ("Extra environment variables"), merged into
+  the spawned server. Old `openrouterApiKey` setting auto-migrates into
+  `OPENROUTER_API_KEY=...` on first load.
+- **Auto-start decoupled from API keys:** starts whenever enabled.
+- **Binary auto-detect:** explicit setting → `which opencode` → common
+  locations; cached. Empty default = auto-detect (old hardcoded
+  `/home/berto/.opencode/bin/opencode` removed).
+- **Model picker:** footer dropdown populated from `GET /provider` (returns
+  `{ all: [...] }` — 186 providers / 6623 models here). Free = zero
+  input+output cost; default selection = first free model from an
+  authenticated provider, with a "free" button to jump back. Per-message
+  `model: { providerID, modelID }` sent on `prompt_async`.
+- **Optional server auth:** `OPENCODE_SERVER_USERNAME`/`_PASSWORD` set on
+  spawn when configured; basic-auth header now sent on all plugin requests
+  + SSE. Settings tab has Start/Stop server buttons + status.
+- **Skill endpoint dead:** opencode 1.18 removed `GET /skill` (no skill HTTP
+  routes in the OpenAPI spec) — the plugin's skills slash-menu can never
+  populate. Left graceful (silent empty list); noted for a later sprint
+  (likely file-based skill discovery from `.opencode/skill`/config dirs).
+- **Verified:** typecheck + build clean; `scripts/e2e-test.mjs` extended to
+  cover auth + provider fetch + free-model override (3rd arg = password).
+- **Backlog:** `backlog.md` §7 updated. Next: S3 vault UX (markdown
+  rendering, @-mentions/FilePart, selection context, stop/abort, session
+  persistence + multi-tab) when the owner wants.
+
 ## ▶ OpenVault Sprint 1 — correctness on current opencode: DONE (2026-08-16)
 
 All committed-ready on `ventures/openvault` branch `improvements` (fork
