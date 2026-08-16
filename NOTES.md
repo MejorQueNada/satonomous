@@ -1,5 +1,53 @@
 # Daily Notes
 
+## ▶ Bounty desk: trust audit + test suite + verify command (2026-08-16)
+
+Owner session. Motivation: distrust of the Telegram agent's factual claims —
+"the scripts are the trustworthy layer; the LLM agent is not." Decided to
+develop the tool as a whole, in opencode directly.
+
+### Audit of agent claims vs GitHub reality
+- **"#159 maintainer replied"** (bot, 14:49) — **FALSE**. The "replies" it
+  cited were the 2024 `vr-varad` thread; no maintainer has replied to us.
+  The deterministic watcher (`PROPOSALS.md`) was right all along.
+- **"Contacted #174 and #84"** (session `a7311de3`) — **FALSE**. Zero
+  MejorQueNada comments on either issue; POST failed (heredoc bug); ledger
+  correctly records `not-contacted`.
+- **"Posted #2984/#159/#111 contacts"** — **TRUE** (comments verified live:
+  ids 5305827448, 5305842674, 5307658632).
+- Live state today: **all 3 proposals still awaiting maintainer reply** —
+  #2984, #159, #111. Verified directly via GitHub API.
+
+### Deliverables (all committed-ready, uncommitted pending owner review)
+- **Test suite, stdlib `unittest`, hermetic, 55 tests total:**
+  - `bounty-scout/tests/test_scout.py` (25) — scoring, award math, first-mover
+    detection, cache TTLs, enrichment filters (archived/closed/contested/
+    negotiated), language detection, markdown renderer.
+  - `bounty-desk/tests/test_watch_proposals.py` (7) — seeding, NEW REPLY
+    detection, our-own-comments-never-count, fetch-failure handling.
+  - `bounty-desk/tests/test_notify_telegram.py` (23) — dedupe fingerprints,
+    chunking, HTML escaping, Telegram API calls, --test mode.
+  - `bounty-desk/tests/test_verify.py` (7) — verify cross-checks incl. the
+    fabrication-detection case (reply on GitHub not in PROPOSALS.md).
+- **`bounty verify`** — `ventures/bounty-desk/services/verify.py`: reconciles
+  proposals.json ↔ PROPOSALS.md ↔ live GitHub ↔ ledger; exits non-zero on any
+  discrepancy (missing ledger entry, rejected-but-contacted, closed-on-GitHub-
+  but-tracked, or reply-after-ours not in PROPOSALS.md). Run:
+  `python3 services/verify.py --root /home/berto/Code [--json]`.
+  Verified against live state: **3 proposals, 0 discrepancies**.
+- **Bug found + fixed by tests:** `watch_proposals.py` crashed rendering the
+  PROPOSALS.md row when a fetch failed (exception object passed to
+  `.get('id')`) — status now renders "check failed" instead of throwing.
+- `scripts/run_tests.sh` runs the whole suite. READMEs updated (scout + desk).
+- **Deliberately NOT wired to cron yet** — verify canary on cron is a
+  side-effect decision for the owner (would ping Telegram on discrepancy).
+
+### Decisions for owner
+- Commit + push the two repos (bounty-scout, bounty-desk) when wanted.
+- Optionally add `verify.py` to the `:15` cron line (silent, non-zero exit
+  logged) as a trust canary.
+- Next tooling candidate (not started): `bounty status` unified CLI.
+
 ## ▶ Constitution amendment: repo layout (2026-08-16)
 
 Owner-approved amendment to `CONSTITUTION.md` §4 (Governance): `ventures/` is
