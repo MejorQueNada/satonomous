@@ -1,0 +1,26 @@
+# secrets / env
+.env
+.env.*
+*.pem
+*.key
+!*.key.tpl
+
+# deps / build
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+dist/
+build/
+
+# data / logs
+*.log
+treasury/ledger/*.jsonl
+
+# venture work products (scout reports, per-task workdirs, client material)
+deliverables/
+
+# os / editor
+.DS_Store
+*.swp
