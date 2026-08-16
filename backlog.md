@@ -52,8 +52,13 @@ run Alby Hub + NWC, the payments skill, the review pipeline, and the scout.
   Decision + build log: `NOTES.md` (2026-08-16 V1 entry).
   **Status: LIVE 2026-08-16** — deployed https://reviewdesk-mcp.fly.dev/ (fly.dev,
   iad), full paid flow + `llm_summary` verified against prod (treasury as test
-  client, ledger txn 23). Redeploy: `scripts/fly-deploy.sh` (flyctl SSO session
-  on the box). Repo: `MejorQueNada/code-review-desk`.
+  client, ledger txn 23). Hardened 2026-08-16 (Sprint A+B): secret redaction now
+  covers every output path incl. LLM input (verified paid E2E, ledger txns
+  31–51); pre-clone size gate, per-IP rate limit, SSE session hardening, /tmp
+  leak fix, invoice TTL. Repos current (`MejorQueNada/code-review-desk`, commits
+  a2d8a9f redaction + 97d2641 hardening). Prod has NOT been redeployed since the
+  fixes — the fly.dev instance still runs the original build. Redeploy:
+  `scripts/fly-deploy.sh` (flyctl SSO session on the box).
 - **C. Bounty-alert product** — package first-mover detection as a paid MCP
   tool (`check_fresh_bounties`) or a Nostr/Discord alert subscription. Tiny
   build on scout.py + PaidMCP. Small market; could be free reputation first.

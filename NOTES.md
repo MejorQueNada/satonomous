@@ -1,5 +1,22 @@
 # Daily Notes
 
+## ▶ Session wrap-up — sprints A/B/C, docs sweep (2026-08-16)
+
+Owner session: planned and executed a hardening sweep one sprint at a time
+(redaction → endpoint hardening → naming; naming cancelled). All committed and
+pushed; prod left undeployed per owner ("repos up to date, nothing running").
+
+- **Docs updated:** `ventures/code-review-desk/README.md` (redaction + limits +
+  hardening + E2E script documented), `fly.toml` (stale `ZEN_SECRETS_FILE`
+  comment corrected — deploy script sets `NWC_CONNECTION_STRING`/`MODE`, Zen key
+  is manual), `backlog.md` §6 B (status now reflects Sprint A+B commits and that
+  prod is not yet redeployed).
+- **Daily note entries:** Sprint A (redaction fix), Sprint B (hardening),
+  Sprint C (cancelled), this wrap-up.
+- **Open items carried forward:** prod redeploy whenever the owner wants the
+  fixes live (`./scripts/fly-deploy.sh`); first real (non-self) paid customer
+  still the #1 milestone; bounty-desk proposals still awaiting Alby maintainers.
+
 ## ▶ Sprint C — naming rename: CANCELLED (2026-08-16, owner decision)
 
 Owner dropped the proposed rename of `ventures/` (and "Ventures" in prose).
