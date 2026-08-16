@@ -41,6 +41,17 @@ PR → payout → ledger. When one lands, start backlog §6 B (PaidMCP review AP
   outputs, logs, `__pycache__/`, and machine-local `notify_state.json`).
   Parent tracks it as a gitlink, same as code-review-desk. Both ventures now
   match the constitution's per-venture-repo rule.
+- **Build in public (2026-08-16, owner-approved)**: pushed `bounty-scout`
+  to GitHub as `MejorQueNada/bounty-scout` (public, MIT). Standalone copy
+  of `scout.py` (stdlib-only) + plain README. Repo lives at
+  `/home/berto/Code/bounty-scout`, tracked in the parent as a gitlink.
+  Push used a transient token-in-URL (never persisted in git config).
+  MejorQueNada public repos now: `2026` (human notes), `snitch-ci-monitor`,
+  `bounty-scout`. Next candidates: `run_review.py` as a standalone
+  code-review runner, and the satonomous framework itself.
+  **Sync note**: the desk still runs `ventures/bounty-desk/services/scout.py`
+  (same code, separate copy) — keep the public copy in lockstep if the
+  internal one changes.
 - **Ledger schema normalized** (owner-approved corrective edit): the two
   agent-written `{"kind":"bounty_attempt",...}` entries (no ts/event) were
   rewritten to the standard schema, comment_urls preserved, and a
