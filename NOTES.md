@@ -1,5 +1,39 @@
 # Daily Notes
 
+## ▶ Public `bounty-agent` setup repo drafted; chat ID redacted (2026-08-16)
+
+Owner decision: publish the full agent setup (OpenClaw agent + Alby wallet +
+Telegram interface that triages open-source bounties) as a public repo so
+others can replicate it — but keep operational state private.
+
+- **Repo name:** `MejorQueNada/bounty-agent` (platform-agnostic; NOT
+  `openclaw-bounty-agent`, in case we switch agent platforms later).
+- **Draft built + verified** in `/tmp/opencode/bounty-agent/` (NOT yet
+  pushed): 4 parameterized scripts (`scout`, `watch_proposals`,
+  `notify_telegram`, `verify`) + `SETUP.md` (Alby Hub → BotFather → OpenClaw
+  channel → cron) + README + MIT LICENSE + `.gitignore` +
+  `examples/proposals.example.json` (empty template). 55 hermetic tests, all
+  green. Secret scan clean: no chat id, bot name, paths, or tokens.
+- **Parameterized vs private originals:** `--secrets`, `--owner`, `--root`
+  args + `BOUNTY_*` env overrides; defaults moved off `MejorQueNada`,
+  `/home/berto`, `~/.openclaw`, `@Surfacebountybot`.
+- **What stays private/local:** `ventures/bounty-desk/services/proposals.json`
+  (live in-flight state), ledger, deliverables, notify_state, everything under
+  `~/.openclaw`. `proposals.json` + `deliverables/` are gitignored in the
+  public repo.
+- **Chat ID redacted:** Telegram id + `Bertofortheppl` binding removed from
+  `NOTES.md` (4 spots) — the public parent repo was already carrying them.
+- **⚠️ FOLLOW-UP (local, owner-agreed): revisit git history for sensitive
+  info.** Redacting going forward does NOT remove the chat id from older
+  `NOTES.md` commits already on GitHub (public parent `satonomous`). Decide
+  later whether to rewrite history (filter-repo) or accept the exposure. This
+  note is the reminder to revisit.
+
+### Decisions for owner
+- Approve creating + pushing `MejorQueNada/bounty-agent` (public) from the
+  draft.
+- Approve committing + pushing the `NOTES.md` chat-id redaction in the parent.
+
 ## ▶ Bounty desk: trust audit + test suite + verify command (2026-08-16)
 
 Owner session. Motivation: distrust of the Telegram agent's factual claims —
@@ -456,14 +490,14 @@ PR → payout → ledger. When one lands, start backlog §6 B (PaidMCP review AP
 ### Telegram live (2026-08-16)
 - Owner created **@Surfacebountybot** via @BotFather; token stored in
   `~/.openclaw/secrets.json` (`TELEGRAM_BOT_TOKEN`), chat id in
-  `TELEGRAM_CHAT_ID` (8938189841, Bertofortheppl). Both 0600; the raw token is
+  `TELEGRAM_CHAT_ID` (redacted for privacy; owned by operator). Both 0600; the raw token is
   **never written to config** — `openclaw.json` references it through the
   zenkey file-secret provider.
 - **Two-way channel configured** in `~/.openclaw/openclaw.json`:
   `channels.telegram.accounts.main` with `botToken` (secret ref),
-  `dmPolicy: allowlist`, `allowFrom: [8938189841]`, `defaultTo: 8938189841`,
+  `dmPolicy: allowlist`, `allowFrom: [<redacted>]`, `defaultTo: <redacted>`,
   `groupAllowFrom`. Owner privileged commands:
-  `commands.ownerAllowFrom: ["telegram:8938189841"]`.
+  `commands.ownerAllowFrom: ["telegram:<redacted>"]`.
   The stock `@openclaw/telegram` channel plugin was missing → `openclaw
   doctor --fix` registered it; gateway now logs
   `[telegram] [main] starting provider (@Surfacebountybot)` + isolated
@@ -507,7 +541,7 @@ PR → payout → ledger. When one lands, start backlog §6 B (PaidMCP review AP
   an **OpenClaw native cron job** (`openclaw cron`), name **bounty-ops-cycle**,
   schedule `30 */6 * * *` (every 6h at :30), dedicated agent session
   (`--session-key agent:main:bounty-ops-cycle`), deliver report to Telegram
-  (`--channel telegram --account main --to 8938189841 --announce
+  (`--channel telegram --account main --to <redacted> --announce
   --best-effort-deliver --expect-final`, timeout 900s).
 - **Reliability findings from 5 test runs (this is the honest account):**
   - Run 1: agent claimed web_search unavailable — TRUE (`web_search` tool
