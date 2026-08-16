@@ -34,9 +34,13 @@ PR → payout → ledger. When one lands, start backlog §6 B (PaidMCP review AP
   (governance + bounty desk services; ledger/deliverables stay local);
   `ventures/code-review-desk/` committed in its own repo (`3ff7b8f` +
   `576d15b` bytecode-ignore fix). Parent tracks code-review-desk as a gitlink
-  (embedded repo, per-venture git design). Note: `ventures/bounty-desk/` has a
-  `.gitignore` but no own `.git` yet — drift from the per-venture-repo rule;
-  decide later whether to split it out.
+  (embedded repo, per-venture git design).
+- **Bounty Desk split out (2026-08-16, owner-approved)**: `ventures/bounty-desk/`
+  is now its own git repo (`7bc5946` initial commit — README, SOP, policy, the
+  three services, proposals.json; its `.gitignore` covers deliverables/, scout
+  outputs, logs, `__pycache__/`, and machine-local `notify_state.json`).
+  Parent tracks it as a gitlink, same as code-review-desk. Both ventures now
+  match the constitution's per-venture-repo rule.
 - **Ledger schema normalized** (owner-approved corrective edit): the two
   agent-written `{"kind":"bounty_attempt",...}` entries (no ts/event) were
   rewritten to the standard schema, comment_urls preserved, and a
