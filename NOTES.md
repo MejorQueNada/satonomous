@@ -1,5 +1,44 @@
 # Daily Notes
 
+## ▶ Bounty tool consolidation: `bounty-agent` = single source of truth (2026-08-16)
+
+Owner concern: too much overlap between `bounty-scout`, `bounty-agent`, and
+`code-review-desk` repos. Audited: `code-review-desk` is a client-facing product
+(unrelated, only shares Alby/ledger infra); the real overlap was `bounty-scout`
+and `bounty-agent` — one system at two scopes (`scout.py` duplicated). Owner
+approved full consolidation.
+
+### What changed
+- **`MejorQueNada/bounty-agent`** (public) is now the single source of truth
+  for all four scripts (scout / watch / notify / verify) + tests + SETUP.md.
+  README notes it supersedes `bounty-scout`.
+- **`MejorQueNada/bounty-scout`** — README archived notice + **repo archived on
+  GitHub** (`archived=true`). `scout.py` now lives as `services/scout.py` in
+  bounty-agent (verified functionally identical, only secrets-path param added).
+- **`ventures/bounty-desk`** (private) — **removed its duplicated copies** of
+  `verify.py`, `watch_proposals.py`, `notify_telegram.py`, `scripts/run_tests.sh`,
+  and `tests/`. Keeps only ops state: `services/proposals.json`,
+  `agents/bounty_workflow.md`, `docs/bounty_policy.md`. Consumes the scripts from
+  `/home/berto/Code/bounty-agent`. README + workflow doc updated to point there.
+- **Parent repo** — `bounty-scout` gitlink replaced with `bounty-agent` gitlink
+  (local checkout at `/home/berto/Code/bounty-agent`).
+- **Cron updated** — both lines now call `/home/berto/Code/bounty-agent/services/*`
+  with `--secrets ~/.openclaw/secrets.json` (+ `--owner MejorQueNada`,
+  `--config`/`--state` for the desk's ops paths). Same schedule (scout+notify :00,
+  watch+notify :15, 3h).
+
+### Verified
+- bounty-agent test suite: 55 tests green from the live checkout.
+- `verify.py --root /home/berto/Code --config ventures/bounty-desk/services/proposals.json ...` → rc=0, 0 discrepancies.
+- `watch_proposals.py` with desk config/outdir → rc=0, 3 tracked, no new replies.
+- `scout.py --outdir deliverables --secrets ~/.openclaw/secrets.json` → rc=0.
+
+### Outcome
+Three repos, three distinct jobs, no script duplication:
+- `bounty-agent` = the tool (public)
+- `bounty-desk` = the ops state (private)
+- `code-review-desk` = the client product (public, untouched)
+
 ## ▶ Public `bounty-agent` setup repo drafted; chat ID redacted (2026-08-16)
 
 Owner decision: publish the full agent setup (OpenClaw agent + Alby wallet +
