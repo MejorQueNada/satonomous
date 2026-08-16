@@ -1,5 +1,39 @@
 # Daily Notes
 
+## ▶ OpenVault Sprint 3 — vault UX: DONE (2026-08-16)
+
+On `ventures/openvault` branch `improvements`. Typecheck + build clean;
+E2E extended to cover `GET /session`, `GET /session/{id}/message`, and
+`POST /session/{id}/abort` — **PASS on both auth paths** vs live opencode
+1.18.18 (plain + basic-auth, `google/gemma-4-26b-a4b-it`).
+
+- **Real markdown rendering:** assistant + user bubbles now render through
+  Obsidian's `MarkdownRenderer.render` (replaces the regex wiki-link hack) —
+  code blocks, lists, embeds, and clickable `[[wiki-links]]` all work.
+  Streaming still uses a plain-text span; the bubble re-renders as markdown
+  on completion.
+- **`@`-mention file picker:** typing `@` shows a dropdown of vault notes;
+  picking one attaches it as a `file://` FilePart (mime by extension) shown
+  as a removable chip. Sent as `type: 'file'` parts on `prompt_async`.
+- **Selection context:** the **＋sel** footer button captures the active
+  editor's selection into a chip; sent as a prepended text part that names
+  the source note (`[[path]]`).
+- **Stop button:** while streaming, a red **Stop** button calls
+  `POST /session/{id}/abort` and cancels the SSE; the bubble keeps partial
+  text and shows `(stopped)` instead of a spurious error.
+- **Session persistence + switcher:** header dropdown lists sessions
+  (`GET /session`), with **New** / **Del** buttons. The active session is
+  persisted to `data.json` (`lastSessionId`) and auto-resumed on reload,
+  history loaded via `GET /session/{id}/message?limit=50`. "Open a new
+  OpenVault chat" command opens a second chat tab (multi-tab); the new tab
+  starts a fresh session.
+- **Notes:** the `/skill` endpoint is still dead in opencode 1.18 (deferred
+  to S5 file-based discovery). Session resume only applies to the first chat
+  tab; extra tabs get fresh sessions.
+- **Verified:** `npm run typecheck` + `npm run build` clean; E2E on both
+  auth paths covers the new session/history/abort endpoints.
+- **Backlog:** `backlog.md` §7 updated; S3 marked done, S4/S5 remain.
+
 ## ▶ OpenVault Sprint 2 — any-provider + free-model picker: DONE (2026-08-16)
 
 On `ventures/openvault` branch `improvements`. Verified via live `opencode

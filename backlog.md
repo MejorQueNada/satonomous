@@ -107,12 +107,21 @@ C rides on B's rails, D any time, E/F optional.
   free-model override) — PASS both auth paths vs 1.18.18. **Note:** opencode
   1.18 removed `GET /skill` — skills slash-menu can't populate; file-based
   skill discovery deferred.
-- **Backlog sprints (all planned, none started):** S3 vault UX (markdown
-  rendering, `@`-mentions/FilePart, selection context, stop/abort, session
-  persistence + multi-tab); S4 agent UX + release (permission approval UI,
-  session history/fork, slash-command passthrough, LICENSE/versions.json/
-  release workflow); S5 parity polish (inline edit w/ word-level diff,
-  tool-progress, reasoning toggle, file-based skills).
+- **Sprint 3 (✅ DONE 2026-08-16 — vault UX):** real markdown rendering via
+  Obsidian `MarkdownRenderer.render` (replaces the regex wiki-link hack; code
+  blocks/embeds/clickable `[[links]]`), `@`-mention picker → `file://`
+  FileParts sent on `prompt_async` (removable chips), **＋sel** button captures
+  the active note's selection into a context part naming the source note,
+  **Stop** button → `POST /session/{id}/abort` + SSE cancel (partial text kept,
+  shows `(stopped)`), session switcher (`GET /session` dropdown + New/Del),
+  persistence via `lastSessionId` in `data.json` with history resumed through
+  `GET /session/{id}/message?limit=50`, and a "new chat" command for
+  multi-tab. E2E extended with session list/history/abort checks — PASS both
+  auth paths vs 1.18.18. Skills endpoint still dead in 1.18 (deferred to S5).
+- **Backlog sprints (all planned, none started):** S4 agent UX + release
+  (permission approval UI, session fork, slash-command passthrough,
+  LICENSE/versions.json/release workflow); S5 parity polish (inline edit w/
+  word-level diff, tool-progress, reasoning toggle, file-based skills).
 - Launch/milestone rule: nothing ships (releases/plugin-store submission)
   without a conscious owner decision + `NOTES.md` entry. This is a free/open
   tool, not a revenue bet — value is dogfooding opencode as a free-model hub.
