@@ -1,5 +1,39 @@
 # Daily Notes
 
+## ▶ Sprint A — ReviewDesk redaction fix (2026-08-16, afternoon session)
+
+Closed as part of the hardening sweep the owner commissioned (Sprint A: redaction,
+Sprint B: endpoint hardening, Sprint C: naming). Sprint A **DONE**, verified through
+the paid path, committed + pushed (`MejorQueNada/code-review-desk` `a2d8a9f`).
+
+- **Bug:** `review_scan` redacted gitleaks only in `top_findings`; the raw secret
+  match text flowed to the client inside `summary.analyzers` and to the Zen LLM —
+  contradicting README/NOTES claims and constitution §2.3. Verified: fixture's
+  `.env.example` secrets (AKIA/ghp_) plus bandit echoing `hunter2` leaked.
+- **Fix (`services/mcp/src/tools/review_scan.ts`):** redact once at the payload
+  level; client result, `analyzers`, and LLM input all built from the redacted
+  copy. Value-based, not tool-based: known secret rules (gitleaks, bandit
+  B105–107, semgrep `secrets.`, ruff hardcoded-password) blank the whole message
+  (regex can't catch short secrets like `hunter2`); a secret-value regex
+  (`AKIA…`, `ghp_…`, `sk-…`, private keys) scrubs echoes in unrelated rules.
+- **Verified end-to-end via the paid path** (treasury as test client, local
+  server on :3100, repo `gitleaks/gitleaks`): invoice → pay → 99 findings →
+  **REDACTION_OK** (0 leaks in result or analyzers; 2 gitleaks findings both
+  `<redacted secret match>`). Repeatable script committed:
+  `services/mcp/scripts/e2e-test.mjs` (SSE-aware, uses hub-cli for the
+  self-payment).
+- **Ops gotchas hit:** hub-cli defaults to port 8029 but our Alby Hub API is on
+  8080 (`-u http://127.0.0.1:8080`). SSE transport needs `Accept: application/
+  json, text/event-stream`. The hub container restarted mid-session (node ended
+  up `running:false/unlocked:false` → NWC `make_invoice` "reply timeout"); owner
+  re-unlocked. `setsid nohup` is required to keep the local MCP server alive
+  across shell calls.
+- **Ledger:** 6 net-zero self-payment E2E entries appended (hub txn ids
+  31/33/35/41/43/45). No balance change (96,954 sats).
+- **Not redeployed to fly** — owner wants repos up to date, nothing running.
+  Prod `https://reviewdesk-mcp.fly.dev` still runs the pre-fix build; redeploy
+  later via `./scripts/fly-deploy.sh` if wanted.
+
 ## ▶ V1 BUILD LOG — ReviewDesk MCP (2026-08-16, continued from launch entry)
 
 - **Built & verified locally** (`services/mcp/`): `review_scan(repo_url,
