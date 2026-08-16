@@ -1,5 +1,14 @@
 # Daily Notes
 
+## ▶ Constitution amendment: repo layout (2026-08-16)
+
+Owner-approved amendment to `CONSTITUTION.md` §4 (Governance): `ventures/` is
+reserved for Satonomous agent-projects (wallets, tasks, revenue); `plugins/`
+is for standalone tools/plugins with their own lineage. Both stay
+gitlink-tracked, but only `ventures/` projects count as ventures. This makes
+the OpenVault relocation decision a permanent, committed rule (auto-loaded via
+AGENTS.md each session).
+
 ## ▶ OpenVault relocated from `ventures/` to `plugins/` (2026-08-16)
 
 Owner decision: `ventures/` is reserved for Satonomous agent-projects (wallets,

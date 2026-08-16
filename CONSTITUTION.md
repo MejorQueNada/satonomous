@@ -55,6 +55,12 @@ feed back into the whole.
    before any paid client deliverable ships. Agents draft; the owner approves.
 4. **Learning loop.** After each venture proves itself, write a retrospective
    into `NOTES.md` and `BUSINESS_PLAN.md`. Scale what worked; kill what didn't.
+5. **Repo layout (owner decision 2026-08-16).** `ventures/` is reserved for
+   Satonomous agent-projects — autonomous agents with wallets doing tasks /
+   earning revenue. `plugins/` is for standalone tools and plugins with their
+   own lineage (e.g. OpenVault, OpenClaw). Both are gitlink-tracked from the
+   parent, but only `ventures/` projects are ventures; nothing ships from a
+   repo in `plugins/` as a Satonomous venture without an owner decision.
 
 ## 5. Operations
 
