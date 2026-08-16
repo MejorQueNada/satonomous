@@ -13,9 +13,35 @@ starts until the maintainer confirms scope.** Concepts in the desk's
    posted 2026-08-16. Maintainer acceptance criteria on record (rolznz: simple,
    structured docs).
    Concept: `ventures/bounty-desk/deliverables/bitcoin-connect-159/concept.md`
+3. **`getAlby/bitcoin-connect#111`** — fix modal jumping when height changes.
+   Contact comment posted 2026-08-16 (id 5307658632). Maintainer-marked
+   `good first issue` with acceptance criteria (animate height, fixed top;
+   mobile sheet note from rolznz).
+   Concept: `ventures/bounty-desk/deliverables/bitcoin-connect-111/concept.md`
 
 On Alby scope confirmation → implement → owner gate before ready-for-review →
 PR → payout → ledger. When one lands, start backlog §6 B (PaidMCP review API).
+
+### Repo audit + first commits (2026-08-16)
+- Full audit of `/home/berto/Code/` (owner switched OpenCode Zen → Go/kimi-k3).
+  Fixed: root `.gitignore` now excludes `deliverables/` (README claimed it
+  already did; the branta-core-98 workdir is a 2.7MB third-party checkout);
+  `run_review.py` single-file-target crash (copytree on a file) and gitleaks
+  report written into the client repo (now temp-dir); README stack line.
+  Verified consistent: proposals.json ↔ PROPOSALS.md ↔ ledger; crontab ↔
+  README; constitution gates reflected in both desk SOPs.
+- **First git commits made** (owner-approved): parent repo `f10ea87`
+  (governance + bounty desk services; ledger/deliverables stay local);
+  `ventures/code-review-desk/` committed in its own repo (`3ff7b8f` +
+  `576d15b` bytecode-ignore fix). Parent tracks code-review-desk as a gitlink
+  (embedded repo, per-venture git design). Note: `ventures/bounty-desk/` has a
+  `.gitignore` but no own `.git` yet — drift from the per-venture-repo rule;
+  decide later whether to split it out.
+- **Ledger schema normalized** (owner-approved corrective edit): the two
+  agent-written `{"kind":"bounty_attempt",...}` entries (no ts/event) were
+  rewritten to the standard schema, comment_urls preserved, and a
+  `ledger_note` entry documents the correction. All 10 entries now use
+  `event` schema.
 
 ### Repo housekeeping (2026-08-16)
 - **Fork deleted:** Branta's Snitch deliverable lives at
