@@ -77,7 +77,10 @@ C rides on B's rails, D any time, E/F optional.
   sidebar agent for Obsidian, but backend-agnostic — opencode as the aggregator
   so ANY provider works (OpenRouter, Anthropic, local) and the **free models**
   (Zen `*-free`, OpenRouter `:free`) are first-class.
-- Location: `ventures/openvault/` (fork `MejorQueNada/openvault`, branch
+- **Tool, not a Satonomous venture** (owner 2026-08-16): it's a standalone
+  plugin with its own lineage under `bertofortheppl`, so it lives in
+  `plugins/`, not `ventures/`.
+- Location: `plugins/openvault/` (fork `MejorQueNada/openvault`, branch
   `improvements` off `main`), gitlink-tracked from parent.
 - **Review findings (verified against opencode 1.18.18):** SSE parser targets the
   old `message.part.delta`/`properties.field` schema; current opencode emits

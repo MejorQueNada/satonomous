@@ -1,5 +1,14 @@
 # Daily Notes
 
+## ▶ OpenVault relocated from `ventures/` to `plugins/` (2026-08-16)
+
+Owner decision: `ventures/` is reserved for Satonomous agent-projects (wallets,
+tasks). OpenVault is a standalone plugin with its own lineage under
+`bertofortheppl` — a tool, not a venture. Moved the gitlink from
+`ventures/openvault` to `plugins/openvault` (same fork, same `improvements`
+branch, same commit). Code, history, and remote are untouched; only the parent
+tree placement changed. `backlog.md` §7 updated to reflect this.
+
 ## ▶ OpenVault Sprint 3 — vault UX: DONE (2026-08-16)
 
 On `ventures/openvault` branch `improvements`. Typecheck + build clean;
