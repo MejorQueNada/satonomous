@@ -72,6 +72,41 @@ run Alby Hub + NWC, the payments skill, the review pipeline, and the scout.
 **Recommended order:** A (done) → B MVP after one real payout proves the lane,
 C rides on B's rails, D any time, E/F optional.
 
+## 7. OpenVault — Obsidian × opencode sidebar chat (reviewed + planned 2026-08-16)
+- Fork of `Bertofortheppl/openvault` (v0.1.0, MIT). Goal: claudian-style
+  sidebar agent for Obsidian, but backend-agnostic — opencode as the aggregator
+  so ANY provider works (OpenRouter, Anthropic, local) and the **free models**
+  (Zen `*-free`, OpenRouter `:free`) are first-class.
+- Location: `ventures/openvault/` (fork `MejorQueNada/openvault`, branch
+  `improvements` off `main`), gitlink-tracked from parent.
+- **Review findings (verified against opencode 1.18.18):** SSE parser targets the
+  old `message.part.delta`/`properties.field` schema; current opencode emits
+  `message.part.updated` + `properties.part.type` + `properties.delta` — so
+  streaming is broken (responses render "(empty response)"). Plus: no
+  idle-vs-drop distinction, skills never retried on failure, OpenRouter-only
+  auth gated auto-start, no model picker/free-model default, plan mode is an
+  injected system prompt (native `agent: 'plan'` exists), no permission
+  approval UX, no session persistence/markdown/abort, no tsconfig (zero
+  typechecking), no LICENSE/versions.json.
+- **Sprint 1 (✅ DONE 2026-08-16 — correctness on current opencode):** SSE
+  parser rewritten for `message.part.updated`/`part.type`/`part.text` with
+  `step-start` gating (was listening for dead `message.part.delta` events →
+  all replies rendered "(empty response)"), native plan/build via `agent`
+  field, drop-vs-idle distinction, skills retry on reconnect, `tsconfig` +
+  `npm run typecheck` (16 latent type errors fixed), E2E smoke test
+  (`scripts/e2e-test.mjs`, PASS vs live 1.18.18). Uncommitted on
+  `improvements` branch.
+- **Backlog sprints (all planned, none started):** S2 any-provider + free-model
+  picker (auto-detect binary, model switcher, per-message model, optional
+  server password); S3 vault UX (markdown rendering, `@`-mentions/FilePart,
+  selection context, stop/abort, session persistence + multi-tab); S4 agent UX
+  + release (permission approval UI, session history/fork, slash-command
+  passthrough, LICENSE/versions.json/release workflow); S5 parity polish
+  (inline edit w/ word-level diff, tool-progress, reasoning toggle).
+- Launch/milestone rule: nothing ships (releases/plugin-store submission)
+  without a conscious owner decision + `NOTES.md` entry. This is a free/open
+  tool, not a revenue bet — value is dogfooding opencode as a free-model hub.
+
 ---
 **Selection rule (from the constitution):** a venture launches only if it is
 legal, ethical, efficient, and plausibly profitable — and the owner signs off.

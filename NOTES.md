@@ -1,5 +1,68 @@
 # Daily Notes
 
+## ▶ OpenVault Sprint 1 — correctness on current opencode: DONE (2026-08-16)
+
+All committed-ready on `ventures/openvault` branch `improvements` (fork
+`MejorQueNada/openvault`, cloned 2026-08-16). NOT yet committed/pushed —
+waiting on owner. Verified via live `opencode serve` (1.18.18).
+
+- **SSE parser rewritten** (`main.ts`): opencode emits `message.part.updated`
+  with `properties.part` (`type`, `text`, `id`) — the old code listened for
+  `message.part.delta`/`properties.field`, which never fire → every response
+  was "(empty response)". New parser: `step-start` gates the model turn (text
+  parts before it are the user's echoed prompt, excluded), text parts
+  accumulated by part id (`part.text` is cumulative full text; `delta` is
+  empty in practice), reasoning/tool parts skipped for now. Verified: reply
+  streams correctly (e2e "PONG").
+- **Plan mode is now native:** `prompt_async` body sends `agent: 'plan'` /
+  `'build'` instead of the injected "you are in plan mode" system prompt.
+  Skills still passed via `system`.
+- **Drop-vs-done distinguished:** `session.idle` completes a turn; an
+  `end`/`close`/`error` before idle now surfaces "connection lost before
+  completion" instead of rendering a truncated reply as success.
+- **Skills retry:** `skillsFetched` resets on disconnect, refetches on next
+  connect (was permanently stuck after one failed fetch).
+- **Repo hygiene:** added `tsconfig.json` (strict) + `npm run typecheck` —
+  exposed 16 latent type errors, all fixed (null guards, definite assignment,
+  dead field removed, cross-class helpers made public). `npm run build` clean.
+- **E2E smoke test** `scripts/e2e-test.mjs`: spawns/attaches to `opencode
+  serve`, creates session, streams SSE with the plugin's exact parse logic,
+  asserts `PONG` + `session.idle`. **PASS against live 1.18.18.**
+- **README:** added Development section (typecheck/build/e2e-test).
+- **Backlog:** `backlog.md` §7 (review findings, Sprint 1 done, S2–S5
+  planned). Parent gitlink for `ventures/openvault` staged, not committed.
+- **Next:** S2 any-provider + free-model picker (auto-detect binary, model
+  switcher, per-message model, optional server password) when the owner wants.
+
+## ▶ OpenVault venture bootstrapped — review + roadmap, Sprint 1 scoped (2026-08-16)
+
+Owner brought in `Bertofortheppl/openvault` — an Obsidian plugin that embeds
+opencode as a sidebar agent — as a new venture. Intent: claudian-style UX but
+backend-agnostic via opencode, with **free models** (Zen `*-free`, OpenRouter
+`:free`) as first-class. Owner chose: fork on GitHub (now `MejorQueNada/
+openvault`), clone + branch locally, Sprint 1 in scope, S2–S5 backlog.
+
+- **Forked + branched:** `ventures/openvault/` on branch `improvements` (off
+  `main`, 5 commits). Gitlink added to parent index (160000, no `.gitmodules`,
+  matching bounty-desk/code-review-desk convention). **Parent commit of the
+  gitlink NOT made** — waiting on owner.
+- **Review (verified live against opencode 1.18.18):** the SSE parser targets
+  the old `message.part.delta`/`properties.field` events; current opencode
+  emits `message.part.updated` with `properties.part.type` + `properties.delta`.
+  Confirmed empirically by driving a local `opencode serve` session. Streaming
+  therefore never fires → assistant renders "(empty response)". Also: drop-vs-
+  idle conflated, skills never retried on failure, OpenRouter-only auth gating
+  auto-start, no model picker/free default, plan mode = injected system prompt
+  (native `agent: 'plan'` exists), no permission approval UX, no markdown,
+  no abort, no session persistence, no tsconfig (zero typechecking), no
+  LICENSE/versions.json.
+- **Roadmap:** S1 correctness (this session) → S2 any-provider + free-model
+  picker → S3 vault UX (markdown, @-mentions, selection, abort, sessions) →
+  S4 agent UX + release hygiene → S5 parity polish (inline edit, tool UI).
+  Full write-up + status: `backlog.md` §7.
+- **Decision:** free/open tool, dogfoods opencode as a free-model hub — not a
+  revenue bet. No releases/store submission without owner sign-off.
+
 ## ▶ Session wrap-up — sprints A/B/C, docs sweep (2026-08-16)
 
 Owner session: planned and executed a hardening sweep one sprint at a time
