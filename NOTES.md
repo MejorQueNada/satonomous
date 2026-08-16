@@ -1,5 +1,11 @@
 # Daily Notes
 
+## ▶ Sprint C — naming rename: CANCELLED (2026-08-16, owner decision)
+
+Owner dropped the proposed rename of `ventures/` (and "Ventures" in prose).
+"Ventures is fine for internal jargon" — everything is treated as a project.
+**No files renamed.** Noted here so the decision isn't re-litigated.
+
 ## ▶ Sprint B — ReviewDesk endpoint hardening (2026-08-16, afternoon session)
 
 **DONE**, verified, committed + pushed (`MejorQueNada/code-review-desk` `97d2641`).
