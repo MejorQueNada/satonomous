@@ -41,11 +41,19 @@ run Alby Hub + NWC, the payments skill, the review pipeline, and the scout.
 - **A. Alby as a scout source** ✅ DONE (option 1): getAlby org `good first
   issue` issues (negotiated, contact-first) added to `scout.py`; README/policy/
   workflow updated. First real payout is most likely from this lane.
-- **B. PaidMCP review API (recurring revenue)** — the backlog's L402 farm
-  modernized: wrap `code-review-desk` as `@getalby/paidmcp` server
-  (`registerPaidTool("review_code", …)`, ~500–2000 sats/run). Zero billing
-  infra, NWC-settled. Needs a server-side NWC app (isolated budget), small TS
-  server (their weather example runs on fly.dev), margin over Zen model cost.
+- **B. PaidMCP review API (recurring revenue)** — ✅ **LAUNCHED 2026-08-16 as
+  "ReviewDesk MCP" (V1)** — `ventures/code-review-desk/services/mcp/`. Wraps
+  `run_review.py` as `@getalby/paidmcp` server: `registerPaidTool("review_scan",
+  1500 sats/scan)`. Input = public repo URL; server clones (shallow, size-capped),
+  runs semgrep/bandit/ruff/gitleaks, redacts secret matches, returns ranked
+  findings + optional LLM summary (findings-only, paid zero-retention Zen model).
+  Receives via dedicated NWC app "ReviewDesk" (make_invoice+lookup_invoice only,
+  isolated budget). Metrics: first paid call ≤30d, ≥3 in month 2, ≥10 in month 3.
+  Decision + build log: `NOTES.md` (2026-08-16 V1 entry).
+  **Status: LIVE 2026-08-16** — deployed https://reviewdesk-mcp.fly.dev/ (fly.dev,
+  iad), full paid flow + `llm_summary` verified against prod (treasury as test
+  client, ledger txn 23). Redeploy: `scripts/fly-deploy.sh` (flyctl SSO session
+  on the box). Repo: `MejorQueNada/code-review-desk`.
 - **C. Bounty-alert product** — package first-mover detection as a paid MCP
   tool (`check_fresh_bounties`) or a Nostr/Discord alert subscription. Tiny
   build on scout.py + PaidMCP. Small market; could be free reputation first.
