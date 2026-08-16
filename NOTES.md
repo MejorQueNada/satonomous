@@ -35,7 +35,9 @@
   PEP 668); stale `PORT=8080` secret from the first deploy kept 8080 while fly
   proxies 3000 (unset — fly never drops secrets unless explicitly unset).
 - README (`ventures/code-review-desk/README.md`) updated with MCP section.
-  Git commit not made (owner approval pending).
+  Committed and pushed to GitHub (MejorQueNada/code-review-desk +
+  MejorQueNada/satonomous, public, 2026-08-16). Local test server on :3100
+  stopped.
 
 ## ▶ In-flight proposals (current state — 2026-08-16)
 
