@@ -128,7 +128,20 @@ C rides on B's rails, D any time, E/F optional.
 - Launch/milestone rule: nothing ships (releases/plugin-store submission)
   without a conscious owner decision + `NOTES.md` entry. This is a free/open
   tool, not a revenue bet — value is dogfooding opencode as a free-model hub.
+## 8. Satoshi's Most Wanted — public bounty board (LAUNCHED 2026-10-22)
+
+Owner-approved pivot after the 2026-10-22 audit (0 lifetime revenue; old
+ventures effectively dead — see NOTES). The reputation/wealth-sharing arm,
+realized as a product: a free, open-data aggregator of sats-paying dev
+opportunities with a verification layer (escrow/contested/stale/trust
+badges) that no existing board provides. Donation-funded (plain tip jar),
+zero take-rate, open source. Old-west branding: Top 5 Most Wanted front
+page. Own repo at `ventures/satoshis-most-wanted/` (spec: `SPEC.md`,
+Sprint 0). Supersedes the Bounty Radar productization idea (§6 C) — same
+pipeline, but a public good instead of a paid tier. The PR-workshop lane
+(§4/§2 style) is NOT pursued per owner: "beacon, not grinder."
 
 ---
+
 **Selection rule (from the constitution):** a venture launches only if it is
 legal, ethical, efficient, and plausibly profitable — and the owner signs off.

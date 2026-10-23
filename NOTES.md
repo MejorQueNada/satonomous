@@ -1,5 +1,69 @@
 # Daily Notes
 
+## ▶ Full project audit + new venture: Satoshi's Most Wanted (2026-10-22)
+
+Owner session. Context: hub node locked since ~Sep 5 (Alby OAuth refresh
+token died on container restart → node start blocked; recovery path
+reverse-engineered today: `connect-alby-account` two-step OAuth, then
+`start`; owner is working through it). Last verified balance snapshot:
+**96,954 sats** (2026-08-16). All ledger flows since founding were net-zero
+self-payments — **lifetime revenue: 0 sats.**
+
+### Audit findings (2026-10-22)
+- Box mostly asleep since Aug 16: 2 scout runs in 2 months, 12 agent-cron
+  runs total. Every money-path dependency (hub unlock, Alby OAuth, fly SSO,
+  redeploy) was owner-only → ~7 weeks dark before anyone noticed. No
+  monitoring existed for the revenue path.
+- All 3 Alby negotiated proposals: **0 maintainer replies** (verified via
+  GitHub API today). Escrowed lanes all contested. Negotiated lane = dead
+  as executed. Bounty-desk recommendation: archive.
+- fly ReviewDesk still healthy but serving the **pre-Sprint-A
+  redaction-leak build** (never redeployed); invoice flow dead since hub
+  locked; zero external paid calls ever. Metrics gate (first customer ≤30d)
+  failed silently.
+- Hygiene still open: GitHub PAT pasted-in-chat never rotated; chat-id in
+  public git history (flagged Aug 16, never revisited).
+
+### Lessons (baked into the new venture's design)
+1. Monitor the service/revenue path itself, from day one (health.py → TG).
+2. Never couple liveness to the owner's laptop or attention → GitHub
+   Actions scheduler + fly hosting; Surface leaves the critical path.
+3. Demand evidence before building: only lanes verified paying.
+4. Deterministic backbone > agent improvisation (re-validated: scout ran
+   2 months unattended, still green today).
+5. No unattended external actions; owner gates stay.
+
+### New venture decision (owner sign-off 2026-10-22)
+**Satoshi's Most Wanted** — `ventures/satoshis-most-wanted/` (own git repo,
+this entry is the launch log; full spec: `SPEC.md` inside, DRAFT pending
+owner approval).
+- **What:** free, open-data public bounty board ("the sheriff's wall")
+  aggregating verified sats-paying dev opportunities with an honest-signal
+  badge layer (🔒 escrow / ⚠ contested / 💀 ghost town / 🚩 rewarder trust /
+  🤝 negotiable). Oct 2026 landscape check: the aggregation+verification
+  gap is empty (LB, SN, Flash, Catalax, gigs.sh are all silos or static
+  directories) — first mover.
+- **Owner decisions:** v1 scope = GitHub bounties + SN (community posts +
+  repo PRs); growth toward everything-sats only if quality holds. Front
+  page = Top 5 Most Wanted by opportunity score + one fresh-clean slot
+  (outlaw-nickname flavor proposed, plain label acceptable). Donations =
+  plain tip jar (zap QR + nostr zaps, no goal bar). Name = **Satoshi's
+  Most Wanted**.
+- **Stack:** scout.py extended → unified JSON in-repo; Astro static board
+  on fly.io; GitHub Actions cron (3h) for pipeline + rebuild (NOT this
+  laptop); nostr bot + public TG channel + RSS in the distribution sprint;
+  health monitoring from day one. Cost: $0 (free models, fly free tier).
+- **NOT building v1:** accounts, escrow, claims, comments, auto-submission.
+- **Rails blocked on hub return:** donation sub-wallet + lightning address.
+
+### Phase 0 items still pending (owner)
+- [ ] fly SSO login + ReviewDesk decision: teardown vs redeploy hardened
+      build (leaky build currently serving)
+- [ ] Rotate GitHub PAT (pasted-in-chat, Aug 16); decide git-history
+      rewrite for the chat-id exposure
+- [ ] Alby Hub: finish `connect-alby-account` → `start` → verify balance
+      (~96,954 expected) → re-link lightning address
+
 ## ▶ Bounty tool consolidation: `bounty-agent` = single source of truth (2026-08-16)
 
 Owner concern: too much overlap between `bounty-scout`, `bounty-agent`, and
