@@ -1,5 +1,25 @@
 # Daily Notes
 
+## ▶ Rail verified E2E; ReviewDesk orphan neutered at the hub (2026-10-23)
+
+- **Self-test (owner-approved, 1000 sats, net zero):** invoice requested from
+  `littlecamel691929@getalby.com` via LNURL (getalby.com app → hub), paid from
+  treasury main wallet → **settled, fees 0, balance unchanged 96,954**.
+  `tipjar_rail_test` ledgered (txn 53). The tip-jar rail is verified
+  end-to-end through the real external path.
+- **ReviewDesk fly app neutered without fly access:** deleted the
+  `ReviewDesk` NWC app (id 3, pubkey route — `DELETE /api/apps/:pubkey`,
+  numeric id 404s) from the hub. The orphaned fly instance can no longer
+  issue invoices or run paid scans → the pre-fix redaction-leak build is
+  unreachable in practice. Residual: the fly app itself still runs on the
+  old (unknown-email) account, likely billing a few $/mo — let receipts
+  surface and kill it then, or ignore. Owner decision: abandon old fly
+  stuff; new deployments use the `bertoforthepeople@gmail.com` fly account
+  (fresh org, fresh free allowance) for the board.
+- Apps remaining on hub: `getalby.com` (address rail, 25k/week budget —
+  created by account link, includes pay_invoice; flagged for awareness),
+  `OpenClaw` (operator), `satsmostwanted` (tip-jar sub-wallet, parked).
+
 ## ▶ Tip jar wired (sub-wallet) — address rail needs owner decision (2026-10-23)
 
 Owner decisions: **auto-unlock declined** (manual re-auth acceptable);
