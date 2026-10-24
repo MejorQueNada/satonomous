@@ -18,8 +18,11 @@
   strict bar + neutral voice + public data; scars >2 block, merged-fix
   block, negotiated inclusion conditional on engagement).
 - GitHub Actions workflow committed (3h cron + manual dispatch + data
-  auto-commits + GitHub email-on-failure = day-one monitoring). Pending
-  owner click: `ENGINE_GITHUB_TOKEN` repo secret → I trigger the first run.
+  auto-commits + GitHub email-on-failure = day-one monitoring). **LIVE:
+  owner added the secret; first Actions run #1 GREEN 2026-10-24 15:35 UTC**
+  (~4.5 min, full ingest+scan; no data commit — output byte-identical to
+  the same-day local run, engine idempotency confirmed). Cron now owns the
+  pipeline every 3h on GitHub's clock; the laptop is out of the loop.
 - **⚠ PAT rotation reminder: `GITHUB_TOKEN_BERTO` created 2026-10-24, 90-day
   expiry (~2027-01-22). Rotate before then or the cron fails (GitHub emails
   the owner on failure — the built-in alert).**
