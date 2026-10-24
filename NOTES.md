@@ -1,5 +1,32 @@
 # Daily Notes
 
+## ▶ Tip jar wired (sub-wallet) — address rail needs owner decision (2026-10-23)
+
+Owner decisions: **auto-unlock declined** (manual re-auth acceptable);
+tip-jar approved. Done: sub-wallet **satsmostwanted** created on the hub
+(app id 4, receive-only scopes — get_balance/get_info/list_transactions/
+lookup_invoice/make_invoice/notifications, no pay), NWC secret stored in
+`ops/.env` (`NWC_SATSMOSTWANTED_URL`, 0600). 0 sats moved; ledger_note
+appended.
+
+**Blocker:** `create-sub-wallet-lightning-address` (handle
+`satsmostwanted@getalby.com`) → 400 "Subscription required." Custom
+lightning-address handles are Alby Pro ($3/mo annual). Free accounts get
+one default handle (unchangeable) at signup.
+
+### Fork for owner
+- **A. Alby Pro ($3/mo):** branded tip-jar address on the dedicated
+  sub-wallet (clean books, on-brand), unlimited sub-wallets, priority
+  support. VSS/encrypted remote backups are listed as a Pro perk BUT hub
+  docs say VSS applies to brand-new hubs only — verify eligibility post-
+  purchase; don't buy Pro for that alone.
+- **B. Free:** `link-alby-account` (full hub-cli invocation, not bare —
+  see command in session) routes the account's default handle to the hub
+  MAIN wallet. Functional today; tips mix into treasury main and the
+  handle is off-brand. Upgrade to A later loses nothing (sub-wallet waits).
+
+Recommendation on record: A. Sub-wallet + secret already in place either way.
+
 ## ▶ Treasury recovered: hub node back online, balance verified (2026-10-23)
 
 Incident closed (opened ~Sep 5): Alby OAuth refresh token died on a hub
