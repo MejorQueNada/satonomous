@@ -1,5 +1,33 @@
 # Daily Notes
 
+## ▶ Treasury recovered: hub node back online, balance verified (2026-10-23)
+
+Incident closed (opened ~Sep 5): Alby OAuth refresh token died on a hub
+container restart → node start blocked → treasury frozen ~7 weeks. Root cause
+was silent and unmonitored (lesson #1 candidate for the board's health.py).
+
+### What fixed it
+1. Reverse-engineered the lockout: expired JWT + dead OAuth + circular
+   dependency (`link-alby-account` needs a running node; start needs valid
+   account auth). Escape hatch: `connect-alby-account` two-step OAuth.
+2. Owner re-authed via browser + completed the account reconnect
+   (`albyAccountConnected: true`), then `hub-cli start --save` → node
+   **running**, fresh JWT saved (expires ~Oct 30).
+
+### Verified state
+- **Balance: 96,954 sats spendable Lightning / 99,840 receivable, on-chain 0 —
+  identical to the 2026-08-15 founding snapshot.** One channel online, hub
+  health clean (no alarms). Ledger: `balance` event appended.
+
+### Follow-ups (owner decisions pending)
+- [ ] **AUTO_UNLOCK_PASSWORD on the container** so reboots self-heal — the
+      7-week lockout was exactly this failure mode (availability vs. security
+      tradeoff: unlock password would live in container env on this box)
+- [ ] Re-link the lightning address (`link-alby-account`) — treasury rail
+- [ ] Tip-jar sub-wallet for Satoshi's Most Wanted (dedicated, isolated)
+- [ ] Uptime caveat: the tip jar only receives while this box is awake; box
+      still sleeps by default
+
 ## ▶ Full project audit + new venture: Satoshi's Most Wanted (2026-10-22)
 
 Owner session. Context: hub node locked since ~Sep 5 (Alby OAuth refresh
