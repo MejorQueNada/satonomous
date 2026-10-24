@@ -14,18 +14,14 @@ appended.
 lightning-address handles are Alby Pro ($3/mo annual). Free accounts get
 one default handle (unchangeable) at signup.
 
-### Fork for owner
-- **A. Alby Pro ($3/mo):** branded tip-jar address on the dedicated
-  sub-wallet (clean books, on-brand), unlimited sub-wallets, priority
-  support. VSS/encrypted remote backups are listed as a Pro perk BUT hub
-  docs say VSS applies to brand-new hubs only — verify eligibility post-
-  purchase; don't buy Pro for that alone.
-- **B. Free:** `link-alby-account` (full hub-cli invocation, not bare —
-  see command in session) routes the account's default handle to the hub
-  MAIN wallet. Functional today; tips mix into treasury main and the
-  handle is off-brand. Upgrade to A later loses nothing (sub-wallet waits).
-
-Recommendation on record: A. Sub-wallet + secret already in place either way.
+### Fork for owner — RESOLVED: B (free) chosen 2026-10-23
+Owner ran the full `link-alby-account` invocation → `{"success": true}`.
+Live rail: **littlecamel691929@getalby.com** → hub main wallet (free-tier
+default handle, account "paralagente" / bertoforthepeople@gmail.com,
+subscription: free). Tip jar v1 displays this address; books stay clean via
+ledger + list_transactions. Upgrade to A (Pro, branded handle on the
+dedicated sub-wallet) stays open anytime — sub-wallet + secret are parked
+and ready. Uptime caveat applies: rail receives only while this box is awake.
 
 ## ▶ Treasury recovered: hub node back online, balance verified (2026-10-23)
 
