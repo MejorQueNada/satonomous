@@ -1,5 +1,32 @@
 # Daily Notes
 
+## ▶ Satoshi's Most Wanted: repo public, Sprint 1 complete, Actions ready (2026-10-24)
+
+- **Venture repo live: github.com/Bertofortheppl/satoshis-most-wanted** (public
+  from day one per D6; pushed via one-shot token URL, token never persisted
+  in git config). Owner picked MIT via the repo-creation license picker
+  (matches plan); `DATA_LICENSE.md` adds CC0 1.0 for the open data.
+- **Sprint 1 engine complete: 46/46 hermetic tests** (schema, trapscan
+  wrapper, attributed GitHub machinery, adapters, strict bar, outcomes
+  ledger, canned-corpus E2E). Vendored trapcheck pinned to upstream
+  `d56fd7d` with attribution policy (never edit upstream file).
+- **First live runs produced the three doors as data** (`docs/reports/`):
+  strict wall + battle scars + **11 zombie purses exposed** (LB listings
+  still "open" that already have merged fixes) + negotiated-lane engagement
+  measured (4/30 getAlby items with ≤60d maintainer engagement).
+- Decisions D5/D6/D7 in the venture `DECISIONS.md` (three doors north star;
+  strict bar + neutral voice + public data; scars >2 block, merged-fix
+  block, negotiated inclusion conditional on engagement).
+- GitHub Actions workflow committed (3h cron + manual dispatch + data
+  auto-commits + GitHub email-on-failure = day-one monitoring). Pending
+  owner click: `ENGINE_GITHUB_TOKEN` repo secret → I trigger the first run.
+- **⚠ PAT rotation reminder: `GITHUB_TOKEN_BERTO` created 2026-10-24, 90-day
+  expiry (~2027-01-22). Rotate before then or the cron fails (GitHub emails
+  the owner on failure — the built-in alert).**
+- Wall state: 1 poster (getAlby#151, negotiated-engaged) — D7 revisit
+  trigger armed: widen sources (💎 bounty-label sweep, Flash verification)
+  before loosening gates.
+
 ## ▶ Rail verified E2E; ReviewDesk orphan neutered at the hub (2026-10-23)
 
 - **Self-test (owner-approved, 1000 sats, net zero):** invoice requested from
