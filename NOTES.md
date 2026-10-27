@@ -1,5 +1,25 @@
 # Daily Notes
 
+## ▶ casa SSH + third-party review ingested into SMW (2026-10-25)
+
+- **casa is now reachable**: Tailscale SSH (`berto@casa`, 100.96.34.99 — the
+  owner's given IP 100.94.36.99 wasn't on the tailnet). Tailscale SSH's
+  periodic browser check = owner clicks an auth link (12h sessions). casa's
+  opencode sessions live in `~/.local/share/opencode/opencode.db` (SQLite;
+  role/text inside data JSON). Capability logged in AGENTS.md for future
+  sessions.
+- **The owner's third-party critique of Satoshi's Most Wanted** (run as a
+  free review session on casa) was pulled via SSH and ingested as a
+  first-class artifact: `ventures/satoshis-most-wanted/docs/reflections/
+  third-party-review-2026-10-25.md`. Verdict: "a consumer protection layer
+  for Bitcoin dev bounties — trap detection + outcomes ledger are the
+  signal." Confirms the decision-queue top two (outcomes wiring, bounty-
+  label sweep); adds "market the avoid angle first."
+- **Session workflow implemented from the review's design**: review
+  sessions (free) write artifacts only; dev sessions (paid) read handoffs
+  first; `docs/handoffs/` + PLANNING decision queue = the session API.
+  First dev handoff written.
+
 ## ▶ Satoshi's Most Wanted: repo public, Sprint 1 complete, Actions ready (2026-10-24)
 
 - **Venture repo live: github.com/Bertofortheppl/satoshis-most-wanted** (public
