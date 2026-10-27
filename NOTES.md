@@ -1,5 +1,20 @@
 # Daily Notes
 
+## ▶ SMW D10 live: Most Wanted populated (2026-10-27)
+
+- Queue 1+2 landed (owner-approved): **awarded/paid outcomes wired** (LB
+  items ingest with honest statuses; latent false-expired bug fixed with
+  regression test; only OPEN listings can post — the spent-purse rule
+  generalized) and the **bounty-label sweep live** (💎 Bounty corpus,
+  top-100/run).
+- **Most Wanted is real: 20 TRAP verdicts.** ClankerNation/OpenAgents (8
+  live issues, the RESEARCH.md crime scene) + **UnsafeLabs/Bounty-Hunters
+  (12 issues) — a trap operation the research never named; the engine
+  found it on its own.** Consumer-protection positioning (third-party
+  review) is now visibly true.
+- Board state: 200 posters (143 open / 57 awarded), wall 5, tracked 175.
+  58 tests. Both repos pushed; cron resumes cache-warm (~5 min runs).
+
 ## ▶ casa SSH + third-party review ingested into SMW (2026-10-25)
 
 - **casa is now reachable**: Tailscale SSH (`berto@casa`, 100.96.34.99 — the
